@@ -10,32 +10,42 @@ Array.from(document.getElementsByClassName('caption')).forEach(
     if (el.hasAttribute('label')) {
       let lab = el.getAttribute('label'),
         split = lab.split(' ');
-      let obj = { label: lab, id: el.parentElement.id, no: split[1] };
+      let obj = {
+        Original_lab: lab,
+        Original_Id: el.parentElement.id,
+        Seq_No: split[1]
+      };
       ArrLab.push(obj);
     }
   }
 );
 console.log(ArrLab);
 ArrLab.sort(function(a, b) {
-  return a.no - b.no;
+  return a.Seq_No - b.Seq_No;
 });
 
 Array.from(document.getElementsByClassName('caption')).forEach(
   (el, ind, arr) => {
-    console.log(ArrLab[ind].label, el.getAttribute('label'));
-    let oldlable = el.getAttribute('label');
-    if (ArrLab[ind].label != oldlable) {
-      ArrLab[ind].oldLabel = el.getAttribute('label');
-      el.setAttribute('label', ArrLab[ind].label);
+    console.log(ArrLab[ind].Original_lab, el.getAttribute('label'));
+    let label = el.getAttribute('label');
+    if (ArrLab[ind].Original_lab != label) {
+      ArrLab[ind].ReNumberdLabel = el.getAttribute('label');
+      el.setAttribute('label', ArrLab[ind].Original_lab);
       Array.from(el.querySelectorAll('.p')).forEach(child => {
-        console.log(child.id);
         if (child.classList.contains('p')) {
-          let split = oldlable.split(' ')[1];
+          let split = label.split(' ')[1];
           child.setAttribute('data-del-label', split);
         }
       });
+    } else {
+      ArrLab[ind].label = '';
     }
   }
 );
+Array.from(ArrLab).forEach((item, ind, arr) => {
+  // if (item.ReNumberdLabel.length != 0) {
+  //   document.querySelectorAll('caption');
+  // }
+});
 
 console.log(ArrLab);
