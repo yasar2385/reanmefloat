@@ -38,14 +38,21 @@ Array.from(document.getElementsByClassName('caption')).forEach(
         }
       });
     } else {
-      ArrLab[ind].label = '';
+      ArrLab[ind].ReNumberdLabel = '';
     }
   }
 );
-Array.from(ArrLab).forEach((item, ind, arr) => {
-  // if (item.ReNumberdLabel.length != 0) {
-  //   document.querySelectorAll('caption');
-  // }
-});
 
+Array.from(ArrLab).forEach((item, ind, arr) => {
+  var DOM = document.createElement('insert');
+  if (item.ReNumberdLabel.length != 0) {
+    document
+      .querySelectorAll(`[rid="${item.Original_Id}"]`)
+      .forEach((elm, i, ar) => {
+        DOM.setAttribute('del_label', item.Original_lab);
+        DOM.textContent = item.ReNumberdLabel;
+        elm.innerHTML = DOM.outerHTML;
+      });
+  }
+});
 console.log(ArrLab);
